@@ -2,5 +2,5 @@
 
 [<EntryPoint>]
 let main argv = 
-    empFiles.processEmperorM2MFiles "C:\EmpFile"
+    EmperorM2mApp.processM2mFiles
     0 // return an integer exit code
