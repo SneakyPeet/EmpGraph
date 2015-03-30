@@ -5,8 +5,8 @@ open FSharp.Data
 
 module internal Parse =
 
-    let processFiles =
-        ignore
+    let processFiles files =
+        files
 
 //type m2mTypeProvider = HtmlProvider<"M2M_TypeProvider.html">
 //
