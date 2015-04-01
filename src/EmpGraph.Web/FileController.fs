@@ -12,7 +12,10 @@ type fileController() =
     inherit ApiController()
 
     member private x.extractZipFileContent =
-        "stream"
+        let streamProvider = new MultipartMemoryStreamProvider();
+        let task = x.Request.Content.ReadAsMultipartAsync()
+        task.Wait()
+        streamProvider.Contents.First().ReadAsStreamAsync().Result;
 
     member private x.parse =
         x.extractZipFileContent

@@ -20,5 +20,5 @@ module EmperorM2mApp =
         |> ignore
 
     let parseZipFileStream stream =
-        "Parsed"
+        stream
         
