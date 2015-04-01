@@ -5,6 +5,13 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EmpGraph.Core", "src\EmpGra
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EmpGraph.Console", "src\EmpGraph.Console\EmpGraph.Console.fsproj", "{97142324-C9EF-4732-939D-500B1E1EBC56}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CB5F2954-D8DB-4F51-8E50-171496DB8237}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EmpGraph.Web", "src\EmpGraph.Web\EmpGraph.Web.fsproj", "{3238B9B3-BB92-4AE0-9F56-0F8210C461D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +26,10 @@ Global
 		{97142324-C9EF-4732-939D-500B1E1EBC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97142324-C9EF-4732-939D-500B1E1EBC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97142324-C9EF-4732-939D-500B1E1EBC56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3238B9B3-BB92-4AE0-9F56-0F8210C461D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3238B9B3-BB92-4AE0-9F56-0F8210C461D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3238B9B3-BB92-4AE0-9F56-0F8210C461D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3238B9B3-BB92-4AE0-9F56-0F8210C461D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
