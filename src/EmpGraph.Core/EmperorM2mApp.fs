@@ -19,5 +19,6 @@ module EmperorM2mApp =
         |> FileHelper.archiveFiles
         |> ignore
 
-    
+    let parseZipFileStream stream =
+        "Parsed"
         

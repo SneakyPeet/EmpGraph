@@ -11,10 +11,23 @@ open EmpGraph.Core
 type fileController() =
     inherit ApiController()
 
+    member private x.extractZipFileContent =
+        "stream"
+
+    member private x.parse =
+        x.extractZipFileContent
+        |> EmperorM2mApp.parseZipFileStream
+        //|> EmperorM2mApp.notify
+        
+
     [<Route("")>]
     member x.Post() : IHttpActionResult =
         match x.Request.Content.IsMimeMultipartContent() with
-        | true -> EmperorM2mApp.notify "Trigger Works"
-                  x.Ok("Success") :> _
-        | false -> EmperorM2mApp.notify "Trigger Did Not Attach File" 
-                   x.BadRequest("Does Not Contain Mime Content") :> _
+        | true -> 
+                  let result = x.parse 
+                  x.Ok(result) :> _
+        | false -> x.BadRequest("Does Not Contain Mime Content") :> _
+//        | true -> EmperorM2mApp.notify "Trigger Works"
+//                  x.Ok("Success") :> _
+//        | false -> EmperorM2mApp.notify "Trigger Did Not Attach File" 
+//                   x.BadRequest("Does Not Contain Mime Content") :> _
