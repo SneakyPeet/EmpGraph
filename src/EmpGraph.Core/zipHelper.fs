@@ -4,14 +4,12 @@ open ICSharpCode.SharpZipLib.Zip
 open ICSharpCode.SharpZipLib.Zip.Compression.Streams
 open System.IO
 
-module internal zipHelper =
+//module internal zipHelper =
 
-    let processZipItem item:ZipEntry =
-        
-
-    let getM2MfileStream =
-        let stream = new MemoryStream()
-        use zipFile = new ZipFile(stream)
-        zipFile |> processZipItem |> ignore
-        let entry = zipInputStream.GetNextEntry()
-        entry.ge
+//    let getEntry (zipFile:ZipFile) =
+//        let entry = zipFile.
+//
+//    let getM2MfileStream stream =
+//        use zipFile = new ZipFile(stream = stream)
+//        let entry = getEntry zipFile.ge
+//        entry.ge
