@@ -50,6 +50,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandling.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="zipHelper.fs" />
     <Compile Include="EmperorM2mApp.fs" />
@@ -58,7 +59,6 @@
     <None Include="M2M_TypeProvider.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="ErrorHandling.fs" />
     <Compile Include="Parse.fs" />
   </ItemGroup>
   <PropertyGroup>

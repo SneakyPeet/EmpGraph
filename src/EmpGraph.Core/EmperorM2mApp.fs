@@ -12,13 +12,17 @@ module EmperorM2mApp =
               headers = [ "Accept", "application/json" ])
         |> ignore
 
-    let processM2mFiles = 
-        FileHelper.fetchFiles
-        |> FileHelper.changeFileExtensions FileHelper.htmlExtension
-        //|> Parse.processFiles
-        |> FileHelper.archiveFiles
-        |> ignore
+//    let processM2mFiles = 
+//        FileHelper.fetchFiles
+//        |> FileHelper.changeFileExtensions FileHelper.htmlExtension
+//        //|> Parse.processFiles
+//        |> FileHelper.archiveFiles
+//        |> ignore
 
     let parseZipFileStream stream =
-        stream
+        let streams = 
+            stream
+            |>zipHelper.getM2Mfiles
+            |> Seq.toList
+        errorHandling.Success streams.Length
         
