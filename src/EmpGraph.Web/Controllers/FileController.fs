@@ -1,13 +1,18 @@
 namespace EmpGraph.Web.Controllers
-
-open System
-open System.Collections.Generic
-open System.Linq
-open System.Web
 open System.Web.Mvc
-open System.Web.Mvc.Ajax
+open EmpGraph.Core
 
-type HomeController() =
+type FileController() =
     inherit Controller()
-    member this.Index () = this.View()
 
+    [<HttpPost>]
+    member this.ParseM2M()  =
+        let file = this.Request.Files.Get("file")
+        match file with
+        | null -> emperorM2mApp.notify "No File Posted"
+        | _ -> 
+            let result = emperorM2mApp.parseZipFileStream file.InputStream
+            match result with
+            | errorHandling.Failure f -> emperorM2mApp.notify f
+            | errorHandling.Success s -> emperorM2mApp.notify "Success"
+        ()

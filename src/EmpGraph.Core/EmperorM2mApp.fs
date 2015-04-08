@@ -1,7 +1,7 @@
 ﻿namespace EmpGraph.Core
 open FSharp.Data
 
-module EmperorM2mApp =
+module emperorM2mApp =
 
     let notify message =
         let group = "gLDyhCvRN4uBPts7yQujMTp1NEBpsE"

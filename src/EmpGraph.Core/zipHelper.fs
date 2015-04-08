@@ -6,11 +6,8 @@ open System.IO
 
 module internal zipHelper =
 
-    let private isXlsExtension fileName = 
-        Path.GetExtension(fileName) = ".xls"
-
     let private isXls (file:ZipEntry) =
-        file.IsFile && isXlsExtension file.Name 
+        file.IsFile && fileHelper.isXlsfile file.Name 
 
     let getM2Mfiles stream =
         use zipFile = new ZipFile(stream = stream)
