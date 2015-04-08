@@ -15,5 +15,5 @@ type FileController() =
             let result = emperorM2mApp.parseZipFileStream file.InputStream
             match result with
             | errorHandling.Failure f -> emperorM2mApp.notify f
-            | errorHandling.Success s -> emperorM2mApp.notify "Success"
+            | errorHandling.Success s -> emperorM2mApp.notify ("Success: Files Processed " + s.ToString())
         ()
