@@ -7,10 +7,11 @@ type FileController() =
 
     [<HttpPost>]
     member this.ParseM2M()  =
-        let file = this.Request.Files.Get("file")
-        match file with
-        | null -> emperorM2mApp.notify "No File Posted"
+        let files = this.Request.Files
+        match files.Count with
+        | 0 -> emperorM2mApp.notify "No File Posted"
         | _ -> 
+            let file = this.Request.Files.Get(0)
             let result = emperorM2mApp.parseZipFileStream file.InputStream
             match result with
             | errorHandling.Failure f -> emperorM2mApp.notify f
