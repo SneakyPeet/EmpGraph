@@ -53,6 +53,7 @@
     <Compile Include="ErrorHandling.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="zipHelper.fs" />
+    <Compile Include="notify.fs" />
     <Compile Include="EmperorM2mApp.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
