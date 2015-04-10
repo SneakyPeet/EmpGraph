@@ -11,7 +11,7 @@ type FileController() =
         | 0 -> "No Results Parsed"
         | 1 -> 
             let r = result.Head
-            let m = String.Format("Movement: {0}% | Open: R{1} | Close: R{2}", r.change.ToString("0.00"), r.openValue.ToString("#,##0.00"), r.closeValue.ToString("#,##0.00"))
+            let m = String.Format("Date: {3} Movement: {0}% | Open: R{1} | Close: R{2}", r.change.ToString("0.00"), r.openValue.ToString("#,##0.00"), r.closeValue.ToString("#,##0.00"), r.date.ToString("dd MMM yy"))
             match r.deposit with
             | 0m -> m
             | _ -> String.Format("{0} | Deposit: R{1}", m, r.deposit.ToString("#,##0.00"))

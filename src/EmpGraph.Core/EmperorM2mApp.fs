@@ -7,7 +7,7 @@ open System.Text.RegularExpressions
 
 module emperorM2mApp =
 
-    type M2MDetails = { client:string; id:string; openValue:decimal; closeValue:decimal; deposit:decimal; change:decimal}
+    type M2MDetails = { date:DateTime; openValue:decimal; closeValue:decimal; deposit:decimal; change:decimal}
 
     let private bf = "Brought Forward"
     let private rbf = "BroughtForward"
@@ -30,6 +30,9 @@ module emperorM2mApp =
         let cleanCurrency = currency.Replace(",","")
         Decimal.Parse(cleanCurrency)
 
+    let toDate (date:string) = 
+        DateTime.ParseExact(date, "dd-MMM-yy", CultureInfo.InvariantCulture)
+
     let calcChange (d:M2MDetails) =
         let c = (d.closeValue/d.openValue) - 1m
         {d with change = c*100m}
@@ -40,7 +43,7 @@ module emperorM2mApp =
         | head::tail -> 
             match head with
             | "BroughtForward" -> 
-                let n = { details with openValue = (toDecimal tail.Head) }
+                let n = { details with openValue = (toDecimal tail.Head); date = toDate tail.Tail.Head }
                 getDetail n tail
             | "Deposit" -> 
                 let n = { details with deposit = (toDecimal tail.Head) }
@@ -51,7 +54,7 @@ module emperorM2mApp =
             | _ -> getDetail details tail
 
     let private parseToDetails (content:string) =
-        let details = { client = "" ; id =""; openValue = 0m; closeValue = 0m; deposit = 0m; change = 0m }
+        let details = { date = DateTime.Now; openValue = 0m; closeValue = 0m; deposit = 0m; change = 0m }
         (clearFluf content).Split('|')
         |> Array.toList
         |> getDetail details
