@@ -1,11 +1,13 @@
 ﻿namespace EmpGraph.Core
 open FSharp.Data
+open System
+open System.Globalization
 open System.IO
 open System.Text.RegularExpressions
 
 module emperorM2mApp =
 
-    type M2MDetails = { client:string; id:string; openValue:string; closeValue:string; deposit:string}
+    type M2MDetails = { client:string; id:string; openValue:decimal; closeValue:decimal; deposit:decimal; change:decimal}
 
     let private bf = "Brought Forward"
     let private rbf = "BroughtForward"
@@ -24,24 +26,32 @@ module emperorM2mApp =
         let replacebf = nohtml.Replace(bf,rbf).Replace(cf,rcf)
         Regex.Replace(replacebf,noWhiteSpacePattern,"|")
 
+    let toDecimal (currency:string) =
+        let cleanCurrency = currency.Replace(",","")
+        Decimal.Parse(cleanCurrency)
+
+    let calcChange (d:M2MDetails) =
+        let c = (d.closeValue/d.openValue) - 1m
+        {d with change = c*100m}
+
     let rec getDetail (details:M2MDetails) lines =
         match lines with
-        | [] -> details
+        | [] -> calcChange details
         | head::tail -> 
             match head with
             | "BroughtForward" -> 
-                let n = { details with openValue = tail.Head }
+                let n = { details with openValue = (toDecimal tail.Head) }
                 getDetail n tail
             | "Deposit" -> 
-                let n = { details with deposit = tail.Head }
+                let n = { details with deposit = (toDecimal tail.Head) }
                 getDetail n tail
             | "CarriedForward" ->
-                let n = { details with closeValue = tail.Head }
+                let n = { details with closeValue = (toDecimal tail.Head) }
                 getDetail n tail
             | _ -> getDetail details tail
 
     let private parseToDetails (content:string) =
-        let details = { client = "" ; id =""; openValue = ""; closeValue = ""; deposit = "" }
+        let details = { client = "" ; id =""; openValue = 0m; closeValue = 0m; deposit = 0m; change = 0m }
         (clearFluf content).Split('|')
         |> Array.toList
         |> getDetail details
@@ -53,10 +63,10 @@ module emperorM2mApp =
         reader.ReadToEnd() |> parseToDetails 
 
     let parseZipFileStream stream =
-        let streams = 
+        let results = 
             stream
             |>zipHelper.getXlsFiles
             |> Seq.toList //todo take out
             |> List.map parse
-        errorHandling.Success streams.Length
+        errorHandling.Success results
         
