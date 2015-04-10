@@ -11,9 +11,10 @@ type FileController() =
         | 0 -> "No Results Parsed"
         | 1 -> 
             let r = result.Head
+            let m = String.Format("Movement: {0}% | Open: R{1} | Close: R{2}", r.change.ToString("0.00"), r.openValue.ToString("#,##0.00"), r.closeValue.ToString("#,##0.00"))
             match r.deposit with
-            | 0m -> String.Format("Movement: {0} | Open: R{1} | Close: R{2}", r.change.ToString("0.00"), r.openValue, r.closeValue)
-            | _ -> String.Format("Movement: {0} | Open: R{1} | Close: R{2} | Deposit: R{3}", r.change.ToString("0.00"), r.openValue, r.closeValue, r.deposit)
+            | 0m -> m
+            | _ -> String.Format("{0} | Deposit: R{1}", m, r.deposit.ToString("#,##0.00"))
         | _ -> "Multiple Files Parsed"
 
     let returnWithNotification result = 
