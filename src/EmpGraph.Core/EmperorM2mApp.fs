@@ -34,7 +34,7 @@ module emperorM2mApp =
         DateTime.ParseExact(date, "dd-MMM-yy", CultureInfo.InvariantCulture)
 
     let calcChange (d:M2MDetails) =
-        let c = (d.closeValue/d.openValue) - 1m
+        let c = ((d.closeValue-d.deposit)/d.openValue) - 1m
         {d with change = c*100m}
 
     let rec getDetail (details:M2MDetails) lines =
