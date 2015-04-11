@@ -17,12 +17,12 @@ type FileController() =
             | _ -> String.Format("{0} | Deposit: R{1}", m, r.deposit.ToString("#,##0.00"))
         | _ -> "Multiple Files Parsed"
 
-    let returnWithNotification result = 
+    let returnWithNotification user result = 
         match result with
-        | errorHandling.Failure f -> notify.sendPushNotification f
-        | errorHandling.Success s -> notify.sendPushNotification (getSuccessMessage s)
+        | errorHandling.Failure f -> notify.sendPushNotification user f
+        | errorHandling.Success s -> notify.sendPushNotification user (getSuccessMessage s)
 
-    let returnEmpty result =
+    let returnEmpty user result =
         let c = 1 
         let a = c + 1
         match result with
@@ -30,12 +30,12 @@ type FileController() =
         | errorHandling.Success s -> s |> getSuccessMessage |> ignore
 
     [<HttpPost>]
-    member this.ParseM2M()  =
+    member this.ParseM2M(parseuser)  =
         let files = this.Request.Files
         match files.Count with
-        | 0 -> notify.sendPushNotification "No File Posted"
+        | 0 -> notify.sendPushNotification parseuser "No File Posted"
         | _ -> 
             let file = this.Request.Files.Get(0)
             let result = emperorM2mApp.parseZipFileStream file.InputStream
-            returnWithNotification result
+            returnWithNotification parseuser result
         ()
