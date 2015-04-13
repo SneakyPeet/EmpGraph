@@ -7,8 +7,6 @@ open System.Text.RegularExpressions
 
 module emperorM2mApp =
 
-    type M2MDetails = { date:DateTime; openValue:decimal; closeValue:decimal; deposit:decimal; change:decimal}
-
     let private bf = "Brought Forward"
     let private rbf = "BroughtForward"
     let private cf = "Carried Forward"
@@ -54,16 +52,20 @@ module emperorM2mApp =
             | _ -> getDetail details tail
 
     let private parseToDetails (content:string) =
-        let details = { date = DateTime.Now; openValue = 0m; closeValue = 0m; deposit = 0m; change = 0m }
+        let details = { account =""; date = DateTime.Now; openValue = 0m; closeValue = 0m; deposit = 0m; change = 0m }
         (clearFluf content).Split('|')
         |> Array.toList
         |> getDetail details
         
+    let parseAccountName fileName = 
+        (Path.GetFileNameWithoutExtension fileName).Substring(9)
         
 
-    let private parse (file:Stream) =
-        use reader = new StreamReader(file)
-        reader.ReadToEnd() |> parseToDetails 
+    let private parse fileInput =
+        use reader = new StreamReader(fileInput.file)
+        let details = reader.ReadToEnd() |> parseToDetails
+        let account = fileInput.name |> parseAccountName
+        { details with account = account }
 
     let parseZipFileStream stream =
         let results = 

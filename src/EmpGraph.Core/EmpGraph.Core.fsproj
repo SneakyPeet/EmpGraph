@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorHandling.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="zipHelper.fs" />
     <Compile Include="notify.fs" />

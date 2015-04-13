@@ -17,12 +17,16 @@ module internal zipHelper =
         memStream.Position <- 0L
         memStream
 
+    let getFileInput (zipFile:ZipFile) (zipEntry:ZipEntry) =
+        let fileStream = copyToMemoryStream zipFile zipEntry
+        {name = zipEntry.Name ; file = fileStream}
+
     let getXlsFiles stream =
         use zipFile = new ZipFile(stream = stream)
         let (files: seq<ZipEntry>) = Seq.cast zipFile
         let streams =
             files
             |> Seq.filter isXls
-            |> Seq.map (fun a -> copyToMemoryStream zipFile a)
+            |> Seq.map (fun a -> getFileInput zipFile a)
             |> Seq.toList
         streams
